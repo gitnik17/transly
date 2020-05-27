@@ -41,7 +41,7 @@ a.infer(QUERY)
 ```
 
 Training a new model on custom data
-Training data file shoulf be a csv with two columns, the input and the output
+Training data file should be a csv with two columns, the input and the output
 
 ```python
 from transly.seq2seq.config import SConfig

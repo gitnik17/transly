@@ -7,7 +7,7 @@
    :alt: Maintenance
 
 .. image:: https://img.shields.io/badge/python-3.above-blue.svg
-   :target:
+   :target: https://img.shields.io/badge/python-3.above-blue.svg
    :alt: versions
 ## Transly
 

@@ -11,7 +11,7 @@ with open("README.rst", "r") as fh:
 
 
 setup(name='transly',
-      version='0.1.3',
+      version='0.1.4',
       description='Seq2Seq based model for transliteration, Hindi to English and English to Hindi',
       url='https://github.com/gitnik17/transly',
       author='Nikhil Kothari',

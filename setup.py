@@ -28,5 +28,6 @@ setup(name='transly',
       install_requires=[
           'pandas',
           'keras',
+          'setuptools',
       ],
       )

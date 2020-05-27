@@ -11,7 +11,7 @@ with open("README.rst", "r") as fh:
 
 
 setup(name='transly',
-      version='0.1.0',
+      version='0.1.1',
       description='Seq2Seq based model for transliteration, Hindi to English and English to Hindi',
       url='https://github.com/gitnik17/transly',
       author='Nikhil Kothari',
@@ -21,12 +21,12 @@ setup(name='transly',
       setup_requires=[
           'pandas',
           'keras==2.3.1',
-          'tensorflow==1.15.2',
+          'tensorflow==1.15.0',
       ],
       install_requires=[
           'pandas',
           'keras==2.3.1',
-          'tensorflow==1.15.2',
+          'tensorflow==1.15.0',
       ],
       packages=['transly'],
       package_data={'transly': ['transly/*']},

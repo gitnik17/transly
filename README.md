@@ -5,8 +5,8 @@
 
 ## Transly
 
-Transly is a Python library for dealing transliteration. It currently supports Hindi to English and English to Hindi transliteration.
-All the pre-trained models can be found in their respective module, inside trained_models folder.
+Transly is a Python library for dealing with transliteration. It currently supports Hindi to English and English to Hindi transliteration.
+All the pre-trained models can be found inside trained_models folder. New models can also be trained on custom data.
 
 ## Installation
 
@@ -52,7 +52,3 @@ s2s = Seq2Seq(config)
 s2s.fit()
 s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
 ```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-

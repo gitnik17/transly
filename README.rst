@@ -19,11 +19,9 @@ All the pre-trained models can be found inside trained_models folder. New models
 
 Installation
 ============
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install transly.
+Use the package manager `pip`_ to install transly
 
-jakhbsjnkal `relative link`_
-
-.. _relative link: https://pip.pypa.io/en/stable/
+.. _pip: https://pip.pypa.io/en/stable/
 
 .. code-block:: sh
 

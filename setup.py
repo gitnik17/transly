@@ -1,4 +1,5 @@
 import sys
+import os
 import subprocess
 
 PY_VER = sys.version[0]
@@ -11,17 +12,16 @@ with open("README.rst", "r") as fh:
 
 
 setup(name='transly',
-      version='0.1.0',
+      version='0.1.9',
       description='Seq2Seq based model for transliteration, Hindi to English and English to Hindi',
       url='https://github.com/gitnik17/transly',
       author='Nikhil Kothari',
       author_email='gitnik17@gmail.com',
       license='Apache License 2.0',
       zip_safe=False,
-      install_requires=[
-          "pandas",
-          "tensorflow",
-          "keras"
+      dependency_links=[
+          # location to your egg file
+          os.path.join(os.getcwd(), 'dist', 'transly-0.1.9-py3.7.egg')
       ],
       extras_require={'tf': ["tensorflow"]},
       packages=['transly'],

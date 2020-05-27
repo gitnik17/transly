@@ -21,6 +21,10 @@ Installation
 ============
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install transly.
 
+jakhbsjnkal `relative link`_
+
+.. _relative link: https://pip.pypa.io/en/stable/
+
 .. code-block:: sh
 
     pip install transly

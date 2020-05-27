@@ -1,9 +1,14 @@
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
    :alt: Code style
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-![versions](https://img.shields.io/badge/python-3.above-blue.svg)
 
+.. image:: https://img.shields.io/badge/Maintained%3F-yes-green.svg
+   :target: https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity
+   :alt: Maintenance
+
+.. image:: https://img.shields.io/badge/python-3.above-blue.svg
+   :target:
+   :alt: versions
 ## Transly
 
 Transly is a Python library for dealing with transliteration. It currently supports Hindi to English and English to Hindi transliteration.

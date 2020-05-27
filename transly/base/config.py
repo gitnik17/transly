@@ -7,11 +7,14 @@ class Config:
     """
     Configuration base class
     """
-    def __init__(self,
-                 configuration_file=None,
-                 training_data_path='transly/seq2seq/train.data.csv',
-                 testing_data_path='transly/data/test.data.csv',
-                 static_config=None):
+
+    def __init__(
+        self,
+        configuration_file=None,
+        training_data_path="transly/seq2seq/train.data.csv",
+        testing_data_path="transly/data/test.data.csv",
+        static_config=None,
+    ):
         """
         Initialise configuration
         :param configuration_file: path to configuration file of a pre-trained model, defaults to None
@@ -24,17 +27,26 @@ class Config:
         :type static_config: dict, optional
         """
         if static_config is None:
-            static_config = {'number_of_units': 64,
-                             'batch_size': 1500,
-                             'epochs': 100,
-                             'PAD_INDEX': 0,
-                             'GO_INDEX': 1}
+            static_config = {
+                "number_of_units": 64,
+                "batch_size": 1500,
+                "epochs": 100,
+                "PAD_INDEX": 0,
+                "GO_INDEX": 1,
+            }
 
         # existing configuration
-        if configuration_file in ['word_boundary', 'spell_correction', 'ner']:
-            self.configuration_file = [f for f in glob.glob(os.path.dirname(os.path.abspath(__file__)) +\
-                                                            '/trained_models/' + \
-                                                            configuration_file + "**/*.pkl", recursive=True)][0]
+        if configuration_file in ["word_boundary", "spell_correction", "ner"]:
+            self.configuration_file = [
+                f
+                for f in glob.glob(
+                    os.path.dirname(os.path.abspath(__file__))
+                    + "/trained_models/"
+                    + configuration_file
+                    + "**/*.pkl",
+                    recursive=True,
+                )
+            ][0]
         else:
             self.configuration_file = configuration_file
 
@@ -44,7 +56,6 @@ class Config:
         # environment configuration
         self.training_data_path = training_data_path
         self.testing_data_path = testing_data_path
-
 
     @abstractmethod
     def get_config(self):

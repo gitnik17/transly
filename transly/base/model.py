@@ -14,7 +14,9 @@ class KModel:
     def fit(self):
         pass
 
-    def save_model(self, path_to_model='/transly/trained_models/model/', model_file_name='model.h5'):
+    def save_model(
+        self, path_to_model="/transly/trained_models/model/", model_file_name="model.h5"
+    ):
         """
         Saves trained model to directory
         :param path_to_model: path to save model, defaults to './trained_models/'
@@ -27,11 +29,14 @@ class KModel:
 
         self.model.save(path_to_model + model_file_name)
 
-        with open(path_to_model + '/config.pkl', 'wb') as f:
+        with open(path_to_model + "/config.pkl", "wb") as f:
             pickle.dump(self.config, f, protocol=2)
 
-
-    def load_model(self, path_to_model='transly/base/trained_models/model/', model_file_name='model.h5'):
+    def load_model(
+        self,
+        path_to_model="transly/base/trained_models/model/",
+        model_file_name="model.h5",
+    ):
         """
         Loads trained model
         :param path_to_model: if it is 'word_boundary' then loads one of default models, else loads model from given path

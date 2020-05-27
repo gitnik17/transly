@@ -21,29 +21,29 @@ pip install transly
 ### Hindi to English
 Using the pre-trained model
 
-```python
+~~~python
 import transly as tl
 
 QUERY = 'नहीं'
 a = tl.load_model(model_path='hi2en')
 a.infer(QUERY)
-```
+~~~
 
 ### English to Hindi
 Using the pre-trained model
 
-```python
+~~~python
 import transly as tl
 
 QUERY = 'NAHI'
 a = tl.load_model(model_path='en2hi')
 a.infer(QUERY)
-```
+~~~
 
 Training a new model on custom data
 Training data file should be a csv with two columns, the input and the output
 
-```python
+~~~python
 from transly.seq2seq.config import SConfig
 from transly.seq2seq.version0 import Seq2Seq
 
@@ -51,4 +51,4 @@ config = SConfig(training_data_path=training_data_path)
 s2s = Seq2Seq(config)
 s2s.fit()
 s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
-```
+~~~

@@ -21,12 +21,12 @@ setup(name='transly',
       setup_requires=[
           'pandas',
           'keras==2.3.1',
-          'tensorflow==1.15.2'
+          'tensorflow==1.15.2',
       ],
       install_requires=[
           'pandas',
           'keras==2.3.1',
-          'tensorflow==1.15.2'
+          'tensorflow==1.15.2',
       ],
       packages=['transly'],
       package_data={'transly': ['transly/*']},

@@ -6,7 +6,7 @@ subprocess.call(["pip{:} install -r requirements.txt".format(PY_VER)], shell=Tru
 
 from setuptools import setup
 
-with open("README.md", "r") as fh:
+with open("README.rst", "r") as fh:
     long_description = fh.read()
 
 

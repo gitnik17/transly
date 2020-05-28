@@ -57,17 +57,19 @@ Using the pre-trained pronunciation model
     a = tp.load_model(model_path='cmu')
     a.infer(QUERY, separator=" ")
 
-Training a new model on custom data
-Training data file should be a csv with two columns, the input and the output
+Training a new model on custom data.
 
-    ========  ===============
-      Input     Output
-    --------  ---------------
-    AA        AA1
-    AABERG    AA1 B ER0 G
-    AACHEN    AA1 K AH0 N
-    AACHENER  AA1 K AH0 N ER0
-    ========  ===============
+Training data file should be a csv with two columns, the input and the output.
+
+========  ===============
+  Input     Output
+--------  ---------------
+========  ===============
+AA        AA1
+AABERG    AA1 B ER0 G
+AACHEN    AA1 K AH0 N
+AACHENER  AA1 K AH0 N ER0
+========  ===============
 
 .. code-block:: python
 

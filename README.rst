@@ -25,7 +25,7 @@ and `IIT Kharagpur transliteration corpus`_.
 .. _IIT Bombay English-Hindi Parallel Corpus: http://www.cfilt.iitb.ac.in/iitb_parallel/
 .. _IIT Kharagpur transliteration corpus: https://cse.iitkgp.ac.in/resgrp/cnerg/qa/fire13translit/index.html
 
-The *pronunciation module* in Transly can predict pronunciation of any given word. *(with an American accent of course!)*
+The *pronunciation module* in Transly can predict pronunciation of any given word *(with an American accent of course!)*
 
 Take any word of any language - just transliterate the word in English (all capitals) and you are good to go.
 Be it a new or old, seen or unseen, sensible or insensible word - *Transly can catch'em all!*

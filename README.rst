@@ -17,7 +17,7 @@
 
 Transly
 =======
-Transly is trained on the `CMU pronouncing dictionary`_, `IIT Bombay English-Hindi Parallel Corpus`_
+**Transly** is trained on the `CMU pronouncing dictionary`_, `IIT Bombay English-Hindi Parallel Corpus`_
 and `IIT Kharagpur transliteration corpus`_.
 
 .. _CMU pronouncing dictionary: http://www.speech.cs.cmu.edu/cgi-bin/cmudict

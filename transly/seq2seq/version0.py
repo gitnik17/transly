@@ -193,4 +193,8 @@ class Seq2Seq(KModel):
 
             if decoder_input[0][i] == self.pad_index:
                 break
-        return self.decode(ix2char=self.output_ix2char, vector=decoder_input[0][1:], separator=separator)
+        return self.decode(
+            ix2char=self.output_ix2char,
+            vector=decoder_input[0][1:],
+            separator=separator,
+        )

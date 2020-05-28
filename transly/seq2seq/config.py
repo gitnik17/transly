@@ -16,6 +16,8 @@ class SConfig(Config):
         training_data_path="khoj/seq2seq/train.data.csv",
         testing_data_path="data/test.data.csv",
         static_config=None,
+        input_mode="character_level",
+        output_mode="character_level",
     ):
         """
         Initialise configuration
@@ -35,6 +37,8 @@ class SConfig(Config):
             testing_data_path,
             static_config,
         )
+        self.input_mode = input_mode
+        self.output_mode = output_mode
 
     def get_config(self):
         """
@@ -74,17 +78,52 @@ class SConfig(Config):
             max([len(str(v)) for v in train_output]),
         )
 
-        (
-            self.config["input_char2ix"],
-            self.config["input_ix2char"],
-            self.config["input_dict_len"],
-        ) = self.__char2index2char__(train_input)
+        if self.input_mode == "character_level":
+            (
+                self.config["input_char2ix"],
+                self.config["input_ix2char"],
+                self.config["input_dict_len"],
+            ) = self.__char2index2char__(train_input)
 
-        (
-            self.config["output_char2ix"],
-            self.config["output_ix2char"],
-            self.config["output_dict_len"],
-        ) = self.__char2index2char__(train_output)
+        elif self.input_mode == "word_level":
+            (
+                self.config["input_char2ix"],
+                self.config["input_ix2char"],
+                self.config["input_dict_len"],
+            ) = self.__word2index2word__(train_input)
+
+        else:
+            raise Exception(
+                "input mode needs to be either 'character_level' or 'word_level'. Received {} instead.".format(
+                    self.input_mode
+                )
+            )
+
+        if self.output_mode == "character_level":
+            (
+                self.config["output_char2ix"],
+                self.config["output_ix2char"],
+                self.config["output_dict_len"],
+            ) = self.__char2index2char__(train_output)
+
+        elif self.output_mode == "word_level":
+            (
+                self.config["output_char2ix"],
+                self.config["output_ix2char"],
+                self.config["output_dict_len"],
+            ) = self.__word2index2word__(train_output)
+
+        else:
+            raise Exception(
+                "output mode needs to be either 'character_level' or 'word_level'. Received {} instead.".format(
+                    self.output_mode
+                )
+            )
+
+        self.config["input_mode"], self.config["output_mode"] = (
+            self.input_mode,
+            self.output_mode,
+        )
 
         return self.config
 
@@ -105,3 +144,22 @@ class SConfig(Config):
         )
         ix2char = {v: k for k, v in char2ix.items()}
         return char2ix, ix2char, len(ix2char)
+
+    def __word2index2word__(self, sentences):
+        """
+        Computes character to indices dict (encoding) as well as indices to character dict (decoding)
+        :param sentences: list of sentences
+        :type sentences: list
+        :return: word encoding dict, decoding dict, length of dict
+        :rtype: dict, dict, int
+        """
+        word2ix = {
+            w: i + 2
+            for i, w in enumerate(set([w for s in sentences for w in str(s).split()]))
+        }
+        word2ix["PAD"], word2ix["GO"] = (
+            self.config["PAD_INDEX"],
+            self.config["GO_INDEX"],
+        )
+        ix2word = {v: k for k, v in word2ix.items()}
+        return word2ix, ix2word, len(ix2word)

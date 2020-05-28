@@ -90,15 +90,12 @@ class Seq2Seq(KModel):
         output = TimeDistributed(Dense(output_dict_len, activation="softmax"))(output)
 
         self.model = Model(inputs=[encoder_input, decoder_input], outputs=[output])
-        optimizer = optimizers.adam(lr=0.001)
-        self.model.compile(
-            optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"]
-        )
-        print(self.model.summary())
 
-    def encode(self, char2ix, words, vector_size):
+    def encode(self, char2ix, words, vector_size, mode="character_level"):
         """
         Encode/index a vector
+        :param mode: mode in which you want to deal in. characters (word_embedding) or words (sentence_embedding)
+        :type mode: str
         :param char2ix: character to index mapping
         :type char2ix: dict
         :param words: words to be encoded/indexed
@@ -108,17 +105,23 @@ class Seq2Seq(KModel):
         :return: encoded vector padded to vector_size
         :rtype: numpy array
         """
+        sequence = (
+            [[char2ix[c] for c in str(w)] for w in words]
+            if mode == "character_level"
+            else [[char2ix[c] for c in str(w).split()] for w in words]
+        )
         return pad_sequences(
             maxlen=vector_size,
-            sequences=[[char2ix[c] for c in str(w)] for w in words],
+            sequences=sequence,
             value=self.config["PAD_INDEX"],
             padding="post",
             truncating="post",
         )
 
-    def decode(self, ix2char, vector):
+    def decode(self, ix2char, vector, separator=""):
         """
         Decode an encoded/indexed vector
+        :param separator: separator while decoding
         :param ix2char: index to character mapping
         :type ix2char: dict
         :param vector: encoded/indexed vector to be decoded
@@ -126,16 +129,17 @@ class Seq2Seq(KModel):
         :return: decoded vector: decoded string
         :rtype decoded vector: str
         """
-        return "".join(
+        return separator.join(
             [ix2char[value] for value in vector if value != self.config["PAD_INDEX"]]
         )
 
-    def fit(self):
+    def fit(self, learning_rate=0.001):
         print("encoding training input")
         encoded_input = input_encoder = self.encode(
             self.config["input_char2ix"],
             self.config["train_input"],
             vector_size=self.config["max_length_input"],
+            mode=self.config["input_mode"],
         )
 
         print("encoding training output")
@@ -143,6 +147,7 @@ class Seq2Seq(KModel):
             self.config["output_char2ix"],
             self.config["train_output"],
             vector_size=self.config["max_length_output"],
+            mode=self.config["output_mode"],
         )
 
         output_decoder = np.eye(self.config["output_dict_len"])[
@@ -150,6 +155,11 @@ class Seq2Seq(KModel):
         ]
         input_decoder = np.array(
             [np.insert(eo[:-1], 0, self.config["GO_INDEX"]) for eo in encoded_output]
+        )
+
+        optimizer = optimizers.adam(lr=learning_rate)
+        self.model.compile(
+            optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"]
         )
 
         self.model.fit(

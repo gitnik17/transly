@@ -71,3 +71,7 @@ Training data file should be a csv with two columns, the input and the output
     s2s = Seq2Seq(config)
     s2s.fit()
     s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
+
+License
+=======
+The Python code in this module is distributed with Apache License 2.0

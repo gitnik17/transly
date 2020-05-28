@@ -63,7 +63,6 @@ Training data file should be a csv with two columns, the input and the output.
 
 ========  ===============
   Input     Output
---------  ---------------
 ========  ===============
 AA        AA1
 AABERG    AA1 B ER0 G

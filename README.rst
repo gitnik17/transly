@@ -59,17 +59,6 @@ Using the pre-trained pronunciation model
 
 Training a new model on custom data.
 
-Training data file should be a csv with two columns, the input and the output.
-
-========  ===============
-  Input     Output
-========  ===============
-AA        AA1
-AABERG    AA1 B ER0 G
-AACHEN    AA1 K AH0 N
-AACHENER  AA1 K AH0 N ER0
-========  ===============
-
 .. code-block:: python
 
     from transly.seq2seq.config import SConfig
@@ -120,6 +109,20 @@ Training data file should be a csv with two columns, the input and the output
     s2s = Seq2Seq(config)
     s2s.fit()
     s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
+
+
+
+Training data file should be a csv with two columns, the input and the output.
+
+========  ===============
+  Input     Output
+========  ===============
+   AA           AA1
+ AABERG     AA1 B ER0 G
+ AACHEN     AA1 K AH0 N
+AACHENER  AA1 K AH0 N ER0
+========  ===============
+
 
 License
 =======

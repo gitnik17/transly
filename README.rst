@@ -19,9 +19,10 @@ Transly
 =======
 Transly is trained on the CMU pronouncing dictionary.
 
-The ``pronunciation module`` in Transly can predict pronunciation of any given word. |
-Be it a word of any language - just transliterate the word in English (all capital) and you are good to go!
-Be it a new/old, seen/unseen, sensible/insensible word, Transly can catch'em all!
+The ``pronunciation module`` in Transly can predict pronunciation of any given word.
+
+Take any word of any language - just transliterate the word in English (all capital) and you are good to go.
+Be it a new or old, seen or unseen, sensible or insensible word - *Transly can catch'em all!*
 
 Another module in Transly is the ``transliteration module``.
 It currently supports Hindi to English and English to Hindi transliterations.

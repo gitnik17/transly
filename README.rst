@@ -17,7 +17,14 @@
 
 Transly
 =======
-Transly is a Python library for dealing with transliteration. It currently supports Hindi to English and English to Hindi transliteration.
+Transly is trained on the CMU pronouncing dictionary.
+
+The pronunciation module can predict pronunciation of any word; new/old, seen/unseen, sensible/insensible.
+Be it a word of any language - just transliterate the word in English (all capital) and you are good to go!
+
+Another module in Transly is a Python library for transliteration. It currently supports Hindi to English (all capital)
+and English (all capital) to Hindi transliterations.
+
 Pre-trained models can be found inside trained_models folder. New models can also be trained on custom data.
 
 Installation
@@ -33,13 +40,42 @@ Use the package manager `pip`_ to install transly
 
 Usage
 =====
+
+Pronunciation
+==============
+Using the pre-trained pronunciation model
+
+.. code-block:: python
+
+    import transly.pronunciation as tp
+
+    # let's try a hindi word
+    QUERY = 'NAHI'
+    a = tp.load_model(model_path='cmu')
+    a.infer(QUERY)
+
+Training a new model on custom data
+Training data file should be a csv with two columns, the input and the output
+
+.. code-block:: python
+
+    from transly.seq2seq.config import SConfig
+    from transly.seq2seq.version0 import Seq2Seq
+
+    config = SConfig(training_data_path=training_data_path, input_mode='character_level', output_mode='word_level')
+    s2s = Seq2Seq(config)
+    s2s.fit()
+    s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
+
+Transliteration
+===============
 Hindi to English
-================
+----------------
 Using the pre-trained model
 
 .. code-block:: python
 
-    import transly as tl
+    import transly.transliteration as tl
 
     QUERY = 'नहीं'
     a = tl.load_model(model_path='hi2en')
@@ -47,12 +83,12 @@ Using the pre-trained model
 
 
 English to Hindi
-================
+----------------
 Using the pre-trained model
 
 .. code-block:: python
 
-    import transly as tl
+    import transly.transliteration as tl
 
     QUERY = 'NAHI'
     a = tl.load_model(model_path='en2hi')

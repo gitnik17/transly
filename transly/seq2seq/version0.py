@@ -170,9 +170,10 @@ class Seq2Seq(KModel):
             epochs=1000,
         )
 
-    def infer(self, text):
+    def infer(self, text, separator=""):
         """
         Inference of new text
+        :param separator: separator for the decoded output
         :param text: strings as input to model
         :type text: str
         :return: predicted output
@@ -192,4 +193,4 @@ class Seq2Seq(KModel):
 
             if decoder_input[0][i] == self.pad_index:
                 break
-        return self.decode(ix2char=self.output_ix2char, vector=decoder_input[0][1:])
+        return self.decode(ix2char=self.output_ix2char, vector=decoder_input[0][1:], separator=separator)

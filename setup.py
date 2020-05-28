@@ -19,7 +19,7 @@ setup(name='transly',
       license='Apache License 2.0',
       zip_safe=False,
       packages=['transly'],
-      package_data={'transly': ['trained_models/*']},
+      package_data={'transly': ['transly/*']},
       include_package_data=True,
       classifiers=[
           "Programming Language :: Python :: 3"

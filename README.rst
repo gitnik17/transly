@@ -127,7 +127,6 @@ Training data file should be a csv with two columns, the input and the output
 AACHENER  AA1 K AH0 N ER0
 ========  ===============
 
-
 License
 =======
 The Python code in this module is distributed with Apache License 2.0

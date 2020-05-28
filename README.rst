@@ -22,7 +22,7 @@ Transly is trained on the CMU pronouncing dictionary.
 The ``pronunciation module`` in Transly can predict pronunciation of any given word.
 
 Take any word of any language - just transliterate the word in English (all capital) and you are good to go.
-Be it a new or old, seen or unseen, sensible or insensible word - *Transly can catch'em all!*
+Be it a new or old, seen or unseen, sensible or insensible word - *Transly can catch'em all!* (with an American accent of course)
 
 Another module in Transly is the ``transliteration module``.
 It currently supports Hindi to English and English to Hindi transliterations.
@@ -52,7 +52,8 @@ Using the pre-trained pronunciation model
     import transly.pronunciation as tp
 
     # let's try a hindi word
-    QUERY = 'NAHI'
+    # the accent would obviously be American
+    QUERY = 'MAKAAN'
     a = tp.load_model(model_path='cmu')
     a.infer(QUERY)
 

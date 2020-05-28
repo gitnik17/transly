@@ -110,7 +110,7 @@ Using the pre-trained model
     s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
 
 
-**Training data file should be a csv with two columns, the input and the output**
+Training data file should be a csv with two columns, the input and the output
 
 ========  ===============
   Input     Output

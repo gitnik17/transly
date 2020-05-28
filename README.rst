@@ -19,13 +19,14 @@ Transly
 =======
 Transly is trained on the CMU pronouncing dictionary.
 
-The pronunciation module can predict pronunciation of any word; new/old, seen/unseen, sensible/insensible.
+The *pronunciation module* in Transly can predict pronunciation of any given word.
 Be it a word of any language - just transliterate the word in English (all capital) and you are good to go!
+Be it a new/old, seen/unseen, sensible/insensible word, Transly can catch'em all!
 
-Another module in Transly is a Python library for transliteration. It currently supports Hindi to English (all capital)
-and English (all capital) to Hindi transliterations.
+Another module in Transly is the *transliteration module*.
+It currently supports Hindi to English and English to Hindi transliterations.
 
-Pre-trained models can be found inside trained_models folder. New models can also be trained on custom data.
+Pre-trained models can be found inside the respective trained_models folders. New models can also be trained on custom data.
 
 Installation
 ============

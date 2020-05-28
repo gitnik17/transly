@@ -3,7 +3,7 @@ from transly.seq2seq.config import SConfig
 from transly.seq2seq.version0 import Seq2Seq
 
 """
-transliteration example
+pronunciation example
 """
 
 TRAIN = False

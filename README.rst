@@ -17,7 +17,8 @@
 
 Transly
 =======
-Transly is a sequence to sequence Bi-directional LSTM Encoder-Decoder model that's trained on the
+Transly is a sequence to sequence Bi-directional LSTM Encoder-Decoder model with Bahdanau Attention
+that's trained on the
 `CMU pronouncing dictionary`_, `IIT Bombay English-Hindi Parallel Corpus`_
 and `IIT Kharagpur transliteration corpus`_.
 
@@ -63,6 +64,8 @@ Using the pre-trained pronunciation model
     a = tp.load_model(model_path='cmu')
     a.infer(QUERY, separator=" ")
 
+    >> 'M AH0 K AA1 N'
+
 **Training a new model on custom data**
 
 .. code-block:: python
@@ -89,6 +92,8 @@ Using the pre-trained model
     a = tl.load_model(model_path='hi2en')
     a.infer(QUERY)
 
+    >> 'NAHI'
+
 
 English to Hindi
 ----------------
@@ -101,6 +106,8 @@ Using the pre-trained model
     QUERY = 'NAHI'
     a = tl.load_model(model_path='en2hi')
     a.infer(QUERY)
+
+    >> 'नही'
 
 
 **Training a new model on custom data**

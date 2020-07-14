@@ -40,7 +40,7 @@ Installation
 ============
 Use the package manager `pip`_ to install transly
 
-.. _pip: https://pip.pypa.io/en/stable/
+.. _pip: https://pypi.org/project/transly/
 
 .. code-block:: sh
 

@@ -78,6 +78,18 @@ Using the pre-trained pronunciation model
     s2s.fit()
     s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
 
+
+Training data file should be a csv with two columns, the input and the output
+
+========  ===============
+  Input     Output
+========  ===============
+   AA           AA1
+ AABERG     AA1 B ER0 G
+ AACHEN     AA1 K AH0 N
+AACHENER  AA1 K AH0 N ER0
+========  ===============
+
 Transliteration
 ===============
 Hindi to English
@@ -88,11 +100,11 @@ Using the pre-trained model
 
     import transly.transliteration as tl
 
-    QUERY = 'नहीं'
+    QUERY = 'निखिल'
     a = tl.load_model(model_path='hi2en')
     a.infer(QUERY)
 
-    >> 'NAHI'
+    >> 'NIKHIL'
 
 
 English to Hindi
@@ -103,11 +115,11 @@ Using the pre-trained model
 
     import transly.transliteration as tl
 
-    QUERY = 'NAHI'
+    QUERY = 'NIKHIL'
     a = tl.load_model(model_path='en2hi')
     a.infer(QUERY)
 
-    >> 'नही'
+    >> 'निखिल'
 
 
 **Training a new model on custom data**
@@ -122,17 +134,6 @@ Using the pre-trained model
     s2s.fit()
     s2s.save_model(path_to_model=model_path, model_file_name=model_file_name)
 
-
-Training data file should be a csv with two columns, the input and the output
-
-========  ===============
-  Input     Output
-========  ===============
-   AA           AA1
- AABERG     AA1 B ER0 G
- AACHEN     AA1 K AH0 N
-AACHENER  AA1 K AH0 N ER0
-========  ===============
 
 License
 =======

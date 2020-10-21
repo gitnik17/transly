@@ -29,6 +29,6 @@ setup(name='transly',
           'pandas',
           'keras==2.3.1',
           'setuptools',
-          'tensorflow==1.15.0',
+          'tensorflow==1.15.4',
       ],
       )

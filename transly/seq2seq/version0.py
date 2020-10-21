@@ -170,18 +170,23 @@ class Seq2Seq(KModel):
             epochs=1000,
         )
 
-    def infer(self, text, separator=""):
+    def infer(self, text, separator="", mode='character'):
         """
         Inference of new text
+        :param mode: input mode, character or word
+        :type mode: str
         :param separator: separator for the decoded output
+        :type separator: str
         :param text: strings as input to model
         :type text: str
         :return: predicted output
         :rtype: str
         """
+        text_ = text if mode=='character' else text.split()
+
         encoder_input = [
-            [self.input_char2ix[c] for c in text]
-            + [self.pad_index] * (self.max_length_input - len(text))
+            [self.input_char2ix[c] for c in text_]
+            + [self.pad_index] * (self.max_length_input - len(text_))
         ]
         decoder_input = [
             [self.go_index] + [self.pad_index] * (self.max_length_output - 1)
@@ -198,3 +203,110 @@ class Seq2Seq(KModel):
             vector=decoder_input[0][1:],
             separator=separator,
         )
+
+    def infer_batch(self, text=[], separator="", mode='character'):
+        """
+        Batch inference of new text
+        :param mode: input mode, character or word
+        :type mode: str
+        :param separator: separator for the decoded output
+        :type separator: str
+        :param text: list of strings as input to model
+        :type text: list
+        :return: predicted output
+        :rtype: list
+        """
+
+        text_ = [list(t) for t in text] if mode == 'character' else [t.split() for t in text]
+
+        encoder_input = [
+            [self.input_char2ix[c] for c in t]
+            + [self.pad_index] * (self.max_length_input - len(t)) for t in text_
+        ]
+        decoder_input = np.array([
+            [self.go_index] + [self.pad_index] * (self.max_length_output - 1) for _ in text_
+        ])
+
+        for i in range(2, self.max_length_output):
+            output = self.model.predict([encoder_input, decoder_input])
+            decoder_input[:, i] = np.argmax(output[:, i], axis=-1)
+
+        return [self.decode(
+            ix2char=self.output_ix2char,
+            vector=d,
+            separator=separator,
+        ) for d in decoder_input[:, 1:]]
+
+
+    def beamsearch(self, text, beam_width=3, separator="", mode='character'):
+        """
+        Beam search for inference of new text
+        :param mode: input mode, character or word
+        :type mode: str
+        :param text: string as input to model
+        :type text: str
+        :param beam_width: number of results for the input
+        :type beam_width: int
+        :param separator: separator for the decoded output
+        :type separator: str
+        :return: predicted output
+        :rtype: list
+        """
+        text_ = list(text) if mode == 'character' else text.split()
+
+        # define encoder input
+        encoder_input = [
+                            [self.input_char2ix[c] for c in text_]
+                            + [self.pad_index] * (self.max_length_input - len(text_))
+                        ] * beam_width
+
+        # define decoder input
+        decoder_input = [
+                            [self.go_index] + [self.pad_index] * (self.max_length_output - 1)
+                        ] * beam_width
+
+        # the output score of each beam
+        output_score = [1] * beam_width
+
+        for i in range(1, self.max_length_output):
+            decoder_input_ = decoder_input.copy()
+
+            output = self.model.predict([encoder_input, decoder_input_])
+
+            # top k indices
+            topk = []
+
+            # probabilities of the indices
+            valk = []
+
+            # selecting topk from all nodes
+            for j, o in enumerate(output[:, i]):
+                idx = o.argsort()[-beam_width:][::-1]
+                val = o[idx] * output_score[j]
+
+                topk.append(idx)
+                valk.append(val)
+
+            # flatten
+            [topk, valk] = (
+                [np.array(topk).reshape(-1), np.array(valk).reshape(-1)]
+                if i != 1
+                else [topk[0], valk[0]]
+            )
+
+            # pick topk indices
+            idx = valk.argsort()[-beam_width:][::-1]
+
+            # update decoder_input and output_score
+            # use index // beam_width to bucketise/unflatten again
+            for k, index in enumerate(idx):
+                bucket = decoder_input_[index // beam_width].copy()
+                bucket[i] = topk[index]
+
+                decoder_input[k] = bucket
+                output_score[k] = valk[index]
+
+        return [
+            self.decode(ix2char=self.output_ix2char, vector=d[1:], separator=separator, )
+            for d in decoder_input
+        ]

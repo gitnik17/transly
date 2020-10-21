@@ -27,8 +27,8 @@ setup(name='transly',
       long_description = long_description,
       install_requires=[
           'pandas',
-          'keras',
+          'keras==2.3.1',
           'setuptools',
-          'tensorflow',
+          'tensorflow==1.15.0',
       ],
       )

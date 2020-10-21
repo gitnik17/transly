@@ -122,6 +122,8 @@ Using the pre-trained model
     QUERY = 'NIKHIL'
     a = tl.load_model(model_path='en2hi')
     a.infer(QUERY)
+    # use infer_batch function to infer batches
+    # use beamsearch function to perform a beam search
 
     >> 'निखिल'
 

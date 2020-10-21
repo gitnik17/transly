@@ -133,7 +133,17 @@ class Seq2Seq(KModel):
             [ix2char[value] for value in vector if value != self.config["PAD_INDEX"]]
         )
 
-    def fit(self, learning_rate=0.001):
+    def fit(self, learning_rate=0.001, epochs=1000, validation_split=0.1):
+        """
+        fit the model
+        :param learning_rate: learning rate
+        :type learning_rate: float
+        :param epochs: number of epochs
+        :type epochs: int
+        :param validation_split: ratio of validation split
+        :type validation_split: float
+        :return:
+        """
         print("encoding training input")
         encoded_input = input_encoder = self.encode(
             self.config["input_char2ix"],
@@ -165,12 +175,12 @@ class Seq2Seq(KModel):
         self.model.fit(
             x=[input_encoder, input_decoder],
             y=[output_decoder],
-            validation_split=0.1,
+            validation_split=validation_split,
             batch_size=self.config["batch_size"],
-            epochs=1000,
+            epochs=epochs,
         )
 
-    def infer(self, text, separator="", mode='character'):
+    def infer(self, text, separator="", mode="character"):
         """
         Inference of new text
         :param mode: input mode, character or word
@@ -182,7 +192,7 @@ class Seq2Seq(KModel):
         :return: predicted output
         :rtype: str
         """
-        text_ = text if mode=='character' else text.split()
+        text_ = text if mode == "character" else text.split()
 
         encoder_input = [
             [self.input_char2ix[c] for c in text_]
@@ -204,7 +214,7 @@ class Seq2Seq(KModel):
             separator=separator,
         )
 
-    def infer_batch(self, text=[], separator="", mode='character'):
+    def infer_batch(self, text=[], separator="", mode="character"):
         """
         Batch inference of new text
         :param mode: input mode, character or word
@@ -217,28 +227,34 @@ class Seq2Seq(KModel):
         :rtype: list
         """
 
-        text_ = [list(t) for t in text] if mode == 'character' else [t.split() for t in text]
+        text_ = (
+            [list(t) for t in text]
+            if mode == "character"
+            else [t.split() for t in text]
+        )
 
         encoder_input = [
             [self.input_char2ix[c] for c in t]
-            + [self.pad_index] * (self.max_length_input - len(t)) for t in text_
+            + [self.pad_index] * (self.max_length_input - len(t))
+            for t in text_
         ]
-        decoder_input = np.array([
-            [self.go_index] + [self.pad_index] * (self.max_length_output - 1) for _ in text_
-        ])
+        decoder_input = np.array(
+            [
+                [self.go_index] + [self.pad_index] * (self.max_length_output - 1)
+                for _ in text_
+            ]
+        )
 
         for i in range(2, self.max_length_output):
             output = self.model.predict([encoder_input, decoder_input])
             decoder_input[:, i] = np.argmax(output[:, i], axis=-1)
 
-        return [self.decode(
-            ix2char=self.output_ix2char,
-            vector=d,
-            separator=separator,
-        ) for d in decoder_input[:, 1:]]
+        return [
+            self.decode(ix2char=self.output_ix2char, vector=d, separator=separator,)
+            for d in decoder_input[:, 1:]
+        ]
 
-
-    def beamsearch(self, text, beam_width=3, separator="", mode='character'):
+    def beamsearch(self, text, beam_width=3, separator="", mode="character"):
         """
         Beam search for inference of new text
         :param mode: input mode, character or word
@@ -252,18 +268,18 @@ class Seq2Seq(KModel):
         :return: predicted output
         :rtype: list
         """
-        text_ = list(text) if mode == 'character' else text.split()
+        text_ = list(text) if mode == "character" else text.split()
 
         # define encoder input
         encoder_input = [
-                            [self.input_char2ix[c] for c in text_]
-                            + [self.pad_index] * (self.max_length_input - len(text_))
-                        ] * beam_width
+            [self.input_char2ix[c] for c in text_]
+            + [self.pad_index] * (self.max_length_input - len(text_))
+        ] * beam_width
 
         # define decoder input
         decoder_input = [
-                            [self.go_index] + [self.pad_index] * (self.max_length_output - 1)
-                        ] * beam_width
+            [self.go_index] + [self.pad_index] * (self.max_length_output - 1)
+        ] * beam_width
 
         # the output score of each beam
         output_score = [1] * beam_width
@@ -307,6 +323,6 @@ class Seq2Seq(KModel):
                 output_score[k] = valk[index]
 
         return [
-            self.decode(ix2char=self.output_ix2char, vector=d[1:], separator=separator, )
+            self.decode(ix2char=self.output_ix2char, vector=d[1:], separator=separator,)
             for d in decoder_input
         ]

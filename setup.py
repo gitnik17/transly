@@ -11,7 +11,7 @@ with open("README.rst", "r") as fh:
 
 
 setup(name='transly',
-      version='0.1.1',
+      version='0.1.2',
       description="""Pronunciation and Transliteration module trained on CMU pronouncing dictionary, IIT Bombay and IIT Kharagpur text corpora""",
       url='https://github.com/gitnik17/transly',
       author='Nikhil Kothari',

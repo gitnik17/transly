@@ -63,6 +63,8 @@ Using the pre-trained pronunciation model
     QUERY = 'MAKAAN'
     a = tp.load_model(model_path='cmu')
     a.infer(QUERY, separator=" ")
+    # use infer_batch function to infer batches
+    # use beamsearch function to perform a beam search
 
     >> 'M AH0 K AA1 N'
 
@@ -103,6 +105,8 @@ Using the pre-trained model
     QUERY = 'निखिल'
     a = tl.load_model(model_path='hi2en')
     a.infer(QUERY)
+    # use infer_batch function to infer batches
+    # use beamsearch function to perform a beam search
 
     >> 'NIKHIL'
 

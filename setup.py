@@ -29,7 +29,7 @@ setup(name='transly',
           'pandas',
           'keras==2.3.1',
           'setuptools',
-          'tensorflow==2.1.0',
+          'tensorflow==2.7.2',
           'h5py==2.10.0'
       ],
       )
